@@ -1,32 +1,29 @@
 from django.db import models
 
-class Manual(models.manual):
-    manual_id=models.CharField(max_length=200,unique=True)
-    description=models.CharField(max_length=200,unique=True)
-    lang=models.CharField(max_length=100,choices=[
-        ('br','pt-BR'),
-        ('en','en-US'),
-        ('es','es-ES')])
+class ProcessDefinition(models.Model):
+    name=models.CharField(max_length=100)
+    description=models.TextField()
 
-    is_active=models.BooleanField(default=False)
-    
-    class Meta:
-            verbose_name='Manual'
-            verbose_name_plural='Manuals'
-            ordering=['id']
+class ProcessStep(models.Model):
+    definition=models.ForeignKey(ProcessDefinition,related_name="steps",on_delete=models.CASCADE)
+    name=models.CharField(max_length=100)
+    step_type=models.CharField(max_length=20,choices=[
+        ('TRIGGER', 'Gatilho'),
+        ('CONDITION', 'Regra Condicional'),
+        ('HUMAN_TASK', 'Aprovação Manual'),
+        ('AUTOMATED', 'Ação Automática'),
+    ])
+    condition_rule=models.JSONField(blank=True,null=True)
 
-    def __str__(self):
-        return "{} ({})".format(self.description,self.manual_id)
+class ProcessExecution(models.Model):
+    definition=models.ForeignKey(ProcessDefinition,on_delete=models.CASCADE)
+    status=models.CharField(max_length=20,default='RUNNING')
+    payload=models.JSONField(default=dict)
+    current_step=models.ForeignKey(ProcessStep,null=True,blank=True,on_delete=models.SET_NULL)
+    started_at=models.DateTimeField(auto_now_add=True)
 
-class Product(models.Model):
-    manual=models.ForeignKey(Manual,on_delete=models.PROJECT,related_name="manual_product")
-    model_code=models.CharField(max_length=50)
-    description=models.CharField(max_length=200,unique=True)
-
-    class Meta:
-        verbose_name="Product Registration (model)"
-        verbose_name_plural="Products Registration (models)"
-        ordering=['id']
-    
-    def __str__(self):
-        return "{} ({})".format(self.manual,self.description)
+class ExecutionLog(models.Model):
+    execution=models.ForeignKey(ProcessExecution,related_name="logs",on_delete=models.CASCADE)
+    step=models.ForeignKey(ProcessStep,on_delete=models.CASCADE)
+    timestamp=models.DateTimeField(auto_now_add=True)
+    status_result=models.CharField(max_length=50)
