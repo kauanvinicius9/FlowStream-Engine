@@ -14,8 +14,8 @@ FlowStream is an automated **state machine engine** designed to manage complex b
 
 | Status | Description |
 | :--- | :--- |
-| **RUNNING** | Process is actively executing steps. |
-| **WAITING** | Pending external user input or task completion. |
-| **COMPLETED** | All steps finished successfully. |
+| **Running** | Process is actively executing steps. |
+| **Waiting** | Pending external user input or task completion. |
+| **Completed** | All steps finished successfully. |
 
 > **Note:** Always verify payload data before triggering manual stage advancements.
