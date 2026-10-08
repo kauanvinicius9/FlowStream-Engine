@@ -32,16 +32,16 @@ class ProcessEngine:
                 next_step=steps[current_index + 1]
         
         if not next_step:
-            execution.status='COMPLETED'
+            execution.status="Completed"
             execution.save()
             return execution
         
-        if next_step.step_type=='CONDITION':
+        if next_step.step_type=="Condition":
             passed=cls.evaluate_condition(next_step.condition_rule,execution.payload)
-            status_result='CONDITION_PASSED' if passed else 'CONDITION_FAILED'
+            status_result="Condition_Passed" if passed else "Condition_Failed"
 
         else:
-            status_result='STEP_EXECUTED'
+            status_result="Step_Executed"
 
         execution.current_step=next_step
         execution.save()

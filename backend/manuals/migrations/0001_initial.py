@@ -3,52 +3,53 @@
 import django.db.models.deletion
 from django.db import migrations, models
 
-
 class Migration(migrations.Migration):
 
-    initial = True
-
-    dependencies = [
+    initial=True
+    dependencies=[
     ]
 
-    operations = [
+    operations=[
         migrations.CreateModel(
-            name='ProcessDefinition',
+            name="ProcessDefinition",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('description', models.TextField()),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=100)),
+                ("description", models.TextField()),
             ],
         ),
+        
         migrations.CreateModel(
-            name='ProcessStep',
+            name="ProcessStep",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('step_type', models.CharField(choices=[('TRIGGER', 'Gatilho'), ('CONDITION', 'Regra Condicional'), ('HUMAN_TASK', 'Aprovação Manual'), ('AUTOMATED', 'Ação Automática')], max_length=20)),
-                ('condition_rule', models.JSONField(blank=True, null=True)),
-                ('definition', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='steps', to='manuals.processdefinition')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=100)),
+                ("step_type", models.CharField(choices=[("Trigger", "Gatilho"), ("Condition", "Regra Condicional"), ("Human_Task", "Aprovação Manual"), ("Automated", "Ação Automática")], max_length=20)),
+                ("condition_rule", models.JSONField(blank=True, null=True)),
+                ("definition", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="steps", to="manuals.processdefinition")),
             ],
         ),
+
         migrations.CreateModel(
-            name='ProcessExecution',
+            name="ProcessExecution",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('status', models.CharField(default='RUNNING', max_length=20)),
-                ('payload', models.JSONField(default=dict)),
-                ('started_at', models.DateTimeField(auto_now_add=True)),
-                ('definition', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='manuals.processdefinition')),
-                ('current_step', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='manuals.processstep')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("status", models.CharField(default="Running", max_length=20)),
+                ("payload", models.JSONField(default=dict)),
+                ("started_at", models.DateTimeField(auto_now_add=True)),
+                ("definition", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="manuals.processdefinition")),
+                ("current_step", models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to="manuals.processstep")),
             ],
         ),
+
         migrations.CreateModel(
-            name='ExecutionLog',
+            name="ExecutionLog",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('timestamp', models.DateTimeField(auto_now_add=True)),
-                ('status_result', models.CharField(max_length=50)),
-                ('execution', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='logs', to='manuals.processexecution')),
-                ('step', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='manuals.processstep')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("timestamp", models.DateTimeField(auto_now_add=True)),
+                ("status_result", models.CharField(max_length=50)),
+                ("execution", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="logs", to="manuals.processexecution")),
+                ("step", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="manuals.processstep")),
             ],
         ),
     ]
