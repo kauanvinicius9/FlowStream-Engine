@@ -6,12 +6,12 @@ const api = axios.create({
 });
 
 export const getDefinitions = async (): Promise<ProcessDefinition[]> => {
-    const response = await api.get<ProcessDefinition[]>('definitions/');
+    const response = await api.get<ProcessDefinition[]>("definitions/");
     return response.data;
 }
 
 export const getExecutions = async (): Promise<ProcessExecution[]> => {
-    const  response = await api.get<ProcessExecution[]>('executions/');
+    const  response = await api.get<ProcessExecution[]>("executions/");
     return response.data;
 }
 
