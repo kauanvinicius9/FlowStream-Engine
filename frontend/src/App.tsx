@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Container, Navbar, Row, Col, Card, Button, Badge, Spinner, Table } from 'react-bootstrap';
-import type { ProcessExecution, ProcessDefinition } from '../src/types';
-import { getExecutions, getDefinitions, advanceExecution } from './services/api';
+import { useEffect, useState } from "react";
+import { Container, Navbar, Row, Col, Card, Button, Badge, Spinner, Table } from "react-bootstrap";
+import type { ProcessExecution, ProcessDefinition } from "../src/types";
+import { getExecutions, getDefinitions, advanceExecution } from "./services/api";
 
 export default function App() {
   const [executions, setExecutions] = useState<ProcessExecution[]>([]);
@@ -14,8 +14,10 @@ export default function App() {
       const [execData, defData] = await Promise.all([getExecutions(), getDefinitions()]);
       setExecutions(execData);
       setDefinitions(defData);
+      
     } catch (error) {
       console.error("Erro ao carregar dados da Engine:", error);
+      
     } finally {
       setLoading(false);
     }
@@ -30,8 +32,10 @@ export default function App() {
     try {
       await advanceExecution(id);
       await fetchData();
+      
   } catch (error) {
     alert("Não foi possível avançar o processo");
+      
   } finally {
     setAdvancingId(null);
   }
@@ -39,9 +43,9 @@ export default function App() {
 
 const getStatusBadge = (status: string) => {
   switch (status) {
-    case 'COMPLETED': return <Badge bg="success">Finalizado</Badge>;
-    case 'RUNNING': return <Badge bg="primary">Em execução</Badge>;
-    case 'WAITING': return <Badge bg="warning" text="dark">Aguardando</Badge>;
+    case "Completed": return <Badge bg="success">Finalizado</Badge>;
+    case "Running": return <Badge bg="primary">Em execução</Badge>;
+    case "Waiting": return <Badge bg="warning" text="dark">Aguardando</Badge>;
     default: return <Badge bg="danger">Erro</Badge>
   }
 };
@@ -78,7 +82,7 @@ return (
                 <Col md={6} key={exec.id} className="mb-4">
                   <Card className="shadow-sm border-0 h-100">
                     <Card.Header className="bg-white d-flex justify-content-between align-items-center py-3">
-                      <span className="fw-bold text-dark">Instância #{exec.id} - {def?.name || 'Processo'}</span>
+                      <span className="fw-bold text-dark">Instância #{exec.id} - {def?.name || "Processo"}</span>
                       {getStatusBadge(exec.status)}
                     </Card.Header>
 
@@ -112,7 +116,7 @@ return (
                       </Table>
                     </Card.Body>
                     <Card.Footer className="bg-white border-0 text-end pb-3">
-                      <Button variant="warning" disabled={exec.status === 'COMPLETED' || advancingId === exec.id} onClick={() => handleAdvance(exec.id)} className="fw-bold">
+                      <Button variant="warning" disabled={exec.status === "Completed" || advancingId === exec.id} onClick={() => handleAdvance(exec.id)} className="fw-bold">
                         {advancingId === exec.id ? (
                           <>
                             <Spinner size="sm" animation="border" className="me-1" />Avaliando Regras...</>
