@@ -18,20 +18,20 @@ class Command(BaseCommand):
         s1=ProcessStep.objects.create(
             definition=proc,
             name="Envio da Solicitação",
-            step_type="TRIGGER"
+            step_type="Trigger"
         )
 
         s2=ProcessStep.objects.create(
             definition=proc,
             name="Checagem de Teto (> R$ 5000)",
-            step_type="CONDITION",
+            step_type="Condition",
             condition_rule={"field": "valor", "op": ">", "val": 5000}
         )
 
         s3=ProcessStep.objects.create(
             definition=proc,
             name="Aprovação da Diretoria",
-            step_type="AUTOMATED"
+            step_type="Automated"
         )
 
         # Instâncias de teste, uma pra passar regra, outra pra travar
@@ -39,14 +39,14 @@ class Command(BaseCommand):
             definition=proc,
             payload={"solicitante": "Ana Santos", "valor": 7600, "motivo": "Viagem de Clientes"},
             current_step=s1,
-            status="RUNNING"
+            status="Running"
         )
 
         ProcessExecution.objects.create(
             definition=proc,
             payload={"solicitante": "Carlos Lima", "valor": 120, "motivo": "Táxi - Uber"},
             current_step=s1,
-            status="RUNNING"
+            status="Running"
         )
 
         self.stdout.write(self.style.SUCCESS("Banco SQLite populado"))
