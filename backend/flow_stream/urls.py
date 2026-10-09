@@ -6,6 +6,4 @@ router=DefaultRouter()
 router.register(r'definitions', ProcessDefinitionViewSet,basename="definition")
 router.register(r"executions",ProcessExecutionViewSet,basename="execution")
 
-urlpatterns = [
-    path("api/", include(router.urls)),
-]
+urlpatterns=[path("api/", include(router.urls))]
