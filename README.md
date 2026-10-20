@@ -1,71 +1,14 @@
 ## FlowStream-Engine Project Documentation
 
-## 1. Overview
+## Overview
 
 **FlowStream-Engine** is a full-stack application developed for managing and executing manuals and process steps. The system has a robust backend built on **Django / Django REST Framework** and a modern reactive frontend built on **React**, **TypeScript** and **Vite**.
 
 ---
 
-## 2. Project Structure
+## Architecture and Components
 
-```text
-FlowStream-Engine-main/
-├── README.md
-├── .gitignore
-├── backend/
-│ ├── manage.py
-│ ├── db.sqlite3
-│ ├── requirements.txt
-│ ├── flow_stream/
-│ │ ├── __init__.py
-│ │ ├── asgi.py
-│ │ ├── settings.py
-│ │ ├── urls.py
-│ │ └── wsgi.py
-│ └── manuals/
-│ ├── __init__.py
-│ ├── admin.py
-│ ├── apps.py
-│ ├── models.py
-│ ├── serializers.py
-│ ├── services.py
-│ ├── views.py
-│ ├── tests.py
-│ ├── management/
-│ │ └── commands/
-│ │ └── seed_db.py
-│ └── migrations/
-│ ├── 0001_initial.py
-│ ├── 0002_alter_processstep_step_type.py
-│ └── __init__.py
-└── frontend/
-    ├── package.json
-    ├── package-lock.json
-    ├── vite.config.ts
-    ├── tsconfig.json
-    ├── tsconfig.app.json
-    ├── tsconfig.node.json
-    ├── eslint.config.js
-    ├── index.html
-    ├── public/
-    │ ├── favicon.svg
-    │ └── icons.svg
-    └── src/
-        ├── App.tsx
-        ├──App.css
-        ├── index.css
-        ├── main.tsx
-        ├── types.ts
-        ├──assets/
-        └── services/
-            └── api.ts
-```
-
----
-
-## 3. Architecture and Components
-
-### 3.1. Backend (Django REST Framework)
+### Backend (`Django REST Framework`)
 
 - **`flow_stream/`**: Django core settings module (`settings.py`, `urls.py`, WSGI/ASGI support).
 - **`manuals/`**: Application responsible for managing manuals and workflow steps:
@@ -75,7 +18,7 @@ FlowStream-Engine-main/
   - **`views.py`**: REST endpoints to manipulate manual resources.
   - **`management/commands/seed_db.py`**: Custom command to populate the initial database (`python manage.py seed_db`).
 
-### 3.2. Frontend (React + TypeScript + Vite)
+### Frontend (React + TypeScript + Vite)
 
 - **`src/services/api.ts`**: HTTP client for communicating with the Django REST API.
 - **`src/types.ts`**: TypeScript type definitions for application data contracts.
@@ -83,9 +26,9 @@ FlowStream-Engine-main/
 
 ---
 
-## 4. Execution Instructions
+## Execution Instructions
 
-### 4.1. Backend Configuration
+### Backend Configuration
 
 1. Navigate to the backend folder:
 
@@ -117,7 +60,7 @@ FlowStream-Engine-main/
    python manage.py runserver
    ```
 
-### 4.2. Frontend Configuration
+### Frontend Configuration
 
 1. In a new terminal, navigate to the frontend folder:
 
